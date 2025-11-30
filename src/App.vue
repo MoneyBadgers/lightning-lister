@@ -22,10 +22,6 @@
         <div class="field"><strong>Description:</strong> {{ parsedInvoice.description }}</div>
         <div class="field"><strong>Timestamp:</strong> {{ parsedInvoice.timestamp }}</div>
         <div class="field"><strong>Expiry (s):</strong> {{ parsedInvoice.expiry }}</div>
-        <div class="field">
-          <strong>Payment Hash:</strong>
-          <span class="mono">{{ parsedInvoice.paymentHash }}</span>
-        </div>
       </template>
 
       <template v-else>
@@ -59,8 +55,6 @@
             <th>Description</th>
             <th>Timestamp</th>
             <th>Expiry (s)</th>
-            <th>Payment Hash</th>
-            <th>Invoice</th>
             <th></th>
           </tr>
         </thead>
@@ -72,8 +66,6 @@
             <td>{{ inv.description }}</td>
             <td>{{ inv.timestamp }}</td>
             <td>{{ inv.expiry }}</td>
-            <td class="mono">{{ inv.paymentHash }}</td>
-            <td class="mono">{{ inv.raw }}</td>
             <td>
               <button class="btn btn-danger btn-sm" @click="deleteInvoice(i)">
                 Delete
@@ -307,6 +299,7 @@ td {
 }
 .field {
   margin-bottom: 4px;
+  text-align: left;
 }
 .error {
   color: #b91c1c;
