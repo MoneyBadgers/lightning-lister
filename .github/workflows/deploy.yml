@@ -23,24 +23,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Install Node first
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
+      # Explicitly install pnpm (this is the missing piece in your failing run)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false  # we will install ourselves below
+
+      # Now that pnpm is installed, install dependencies
       - name: Install dependencies
-        run: npm ci
-        # if you don't have package-lock.json, use:
-        # run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
-      - name: Upload artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     needs: build
@@ -51,5 +57,5 @@ jobs:
 
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
