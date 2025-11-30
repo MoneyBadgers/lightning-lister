@@ -23,20 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Install Node first
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Explicitly install pnpm (this is the missing piece in your failing run)
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
-          run_install: false  # we will install ourselves below
+          run_install: false
 
-      # Now that pnpm is installed, install dependencies
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -57,5 +54,5 @@ jobs:
 
     steps:
       - name: Deploy to GitHub Pages
-      - id: deployment
+        id: deployment
         uses: actions/deploy-pages@v4
